@@ -3,7 +3,6 @@ import { Types } from "mongoose";
 
 @Schema()
 export class Customer {
-    @Prop()
     _id: Types.ObjectId;
 
     @Prop()

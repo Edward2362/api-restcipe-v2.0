@@ -1,11 +1,11 @@
-import { ConfigModule } from "@nestjs/config";
+import { ConfigInitModule } from "./Config/config-init.module";
 import { DatabaseModule } from "./Database/database.module";
 import { AuthenticationModule } from "./Modules/Authentication/authentication.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 
 export const imports = [
-    ConfigModule.forRoot({isGlobal: true}),
+    ConfigInitModule,
     DatabaseModule,
     AuthenticationModule
 ];
