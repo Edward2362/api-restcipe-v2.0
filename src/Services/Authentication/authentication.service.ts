@@ -44,12 +44,12 @@ export class AuthenticationService {
 
         let encryptedPassword = await bcrypt.hash(authenticationDTO.customerPassword, HASHING_SALT);
 
-        const nextCustomer =  await new this.customerModel({
+        const nextCustomer =  await this.customerModel.create({
             customerEmail: authenticationDTO.customerEmail,
             customerPassword: encryptedPassword,
             customerFirstName: "",
             customerLastName: ""
-        }).save();
+        });
 
         let token = await this.jwtService.signAsync({customerId: nextCustomer._id});
         let customerResponse: CustomerResponse = new CustomerResponse();
