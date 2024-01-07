@@ -10,4 +10,8 @@ import { HASHING_SALT } from "../../Config/constant";
 @Injectable()
 export class CustomerService {
     constructor(@InjectModel(Customer.name) private customerModel: Model<Customer>) {}
+
+    async getCustomerData(customerId: string): Promise<Customer> {
+        return await this.customerModel.findOne({_id: customerId}).exec();
+    }
 }

@@ -5,6 +5,8 @@ import { MessageResponse } from "../../Models/MessageResponse/message-response.m
 import { CustomerResponse } from "../../Models/Customer/customer-response.model";
 import { HttpExceptionFilter } from "../../SharedActions/Filters/http-exception.filter";
 import { INPUT_CUSTOMER_EMAIL_MESSAGE, INPUT_CUSTOMER_PASSWORD_MESSAGE } from "../../Config/constant";
+import { ApiOkResponse } from "@nestjs/swagger";
+import { ApiOkMessageResponse } from "../../SharedActions/Decorators/MessageResponse/message-response.decorator";
 
 @Controller("authentication")
 export class AuthenticationController {
@@ -12,8 +14,9 @@ export class AuthenticationController {
 
     @Post("login")
     @UseFilters(new HttpExceptionFilter())
+    @ApiOkMessageResponse(CustomerResponse)
     @HttpCode(HttpStatus.OK)
-    async login(@Body() authenticationDTO: AuthenticationDTO) {
+    async login(@Body() authenticationDTO: AuthenticationDTO): Promise<MessageResponse<CustomerResponse>> {
         if (authenticationDTO.customerEmail === undefined) {
             throw new BadRequestException(INPUT_CUSTOMER_EMAIL_MESSAGE);
         }
@@ -34,8 +37,9 @@ export class AuthenticationController {
 
     @Post("register")
     @UseFilters(new HttpExceptionFilter())
+    @ApiOkMessageResponse(CustomerResponse)
     @HttpCode(HttpStatus.OK)
-    async register(@Body() authenticationDTO: AuthenticationDTO) {
+    async register(@Body() authenticationDTO: AuthenticationDTO): Promise<MessageResponse<CustomerResponse>> {
         if (authenticationDTO.customerEmail === undefined) {
             throw new BadRequestException(INPUT_CUSTOMER_EMAIL_MESSAGE);
         }
